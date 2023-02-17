@@ -1,0 +1,110 @@
+---
+title: "Data Import"
+author: "Jarred Robidoux"
+date: "2023-02-17"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# __Data Import__
+Working with data provided by R packages is a great way to learn the tools of data 
+science, but at some point you want to stop learning and start working with your 
+own data. In this walkthrough, you'll learn how to read plain-text rectangular files
+into R. 
+
+# __Prerequisites__
+In this chapter, you'll learn how to load flat files in R with the readr package
+which is part of the core tidyverse
+```{r}
+library(tidyverse)
+```
+
+# __Getting Started__
+Most of readr's functions are concerned with turning flat files into data frames
+
+**read_csv()** reads comman delimted files, **read_csv2()** reads semicolon separated
+files (common in countries where , is used as the decimal place), **read_tsv()** reads
+tab delimited files, and **read_delim()** reads in files with any delimiter.
+
+
+**read_fwf()** reads fixed width files. You can specify fields either by their widths
+with **fwf_widths()** or their position with **fwf_positions()**. **read_table()** reads
+a common variation of fixed width files where columns are separated by white space
+
+**read_log()** reads Apache style log files. (But also check out webreadr which is 
+built on top of **read_log()** and provides many more helpful tools)
+
+The first argument to **read_csv()** is the most important: it's the path to the file
+to read
+```{r}
+airtravel <- read_csv("airtravel.csv", col_names = T)
+```
+
+You can also supply an inline csv file. This is useful for experimenting with readr
+and for creating reproducible examples to share with others. 
+```{r}
+read_csv("a,b,c
+         1,2,3
+         4,5,6")
+```
+
+Sometimes there are a few lines of metadata at the top of the file. You can use 
+**skip** = n to skip the first n lines; or use **comment** = "#" to drop all lines that start 
+with (e.g.) #.
+```{r}
+read_csv("The first line of metadata
+         The second line of metadata
+         x,y,z
+         1,2,3", skip = 2)
+```
+
+The data also might not have column names. You can use **col_names** = FALSE to tell
+**read_csv()** not to treat the first row as headings, and instead label them sequentially from X1 to Xn.
+```{r}
+read_csv("1,2,3\n4,5,6", col_names = FALSE)
+```
+
+Alternatively you can pass **col_names()** a character vector which will be used as the column names. 
+```{r}
+read_csv("1,2,3\n4,5,6", col_names = c("x", "y", "z"))
+```
+
+Another option that commonly needs tweaking is **na**: this specifies the value (or values) that are used to represent missing values in your file. 
+```{r}
+read_csv("a,b,c\n1,2,.", na = ".")
+```
+
+# __Exercises__ 
+1. What function would you use to read a file where fields were separated with "|"
+```{r}
+read_delim(file, delim = "|")
+```
+
+2. Apart from **file**, **skip**, and **comment**, what other arguments do read_csv() and read_tsv() have in common?
+```{r}
+?read_csv
+```
+
+Some common arguments include; na =, delim =, col_names = 
+
+3. What are the most important arguments to read_fwf()
+```{r}
+?read_fwf
+```
+
+The most important arguments to read_fwf() are file, col_positions, col_types, and col_select
+
+4. Sometimes strings in a CSV file contain commas. To prevent them from causing problems they need to be surrounded by a quoting character, like **"** or **'**. By default, read_csv() assumes that the quoting character will be ". What argument to read_csv() do you need to specify to read the following text into a data frame? 
+```{r}
+read_csv("x,y\n'a,b'", quote = "'")
+```
+
+5. Identify what is wrong with each of the following inline CSV files. What happens when you run the code? 
+```{r}
+read_csv("a,b\n1,2,3\n4,5,6")
+```
+
+# __Parsing a Vector__
