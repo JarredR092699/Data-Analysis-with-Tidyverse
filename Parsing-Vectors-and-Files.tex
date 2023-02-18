@@ -1,0 +1,512 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Parsing Vectors and Files},
+  pdfauthor={Jarred Robidoux},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Parsing Vectors and Files}
+\author{Jarred Robidoux}
+\date{2023-02-17}
+
+\begin{document}
+\maketitle
+
+\hypertarget{parsing-a-vector}{%
+\section{\texorpdfstring{\textbf{Parsing a
+Vector}}{Parsing a Vector}}\label{parsing-a-vector}}
+
+Let's talk about the \textbf{parse}() functions. These functions take a
+character vector and return a more specialized vector like a logical,
+integer, or date.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str}\NormalTok{(}\FunctionTok{parse\_logical}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"TRUE"}\NormalTok{, }\StringTok{"FALSE"}\NormalTok{, }\StringTok{"NA"}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  logi [1:3] TRUE FALSE NA
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str}\NormalTok{(}\FunctionTok{parse\_integer}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"1"}\NormalTok{, }\StringTok{"2"}\NormalTok{, }\StringTok{"3"}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  int [1:3] 1 2 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str}\NormalTok{(}\FunctionTok{parse\_date}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"2010{-}10{-}01"}\NormalTok{, }\StringTok{"1979{-}10{-}14"}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Date[1:2], format: "2010-10-01" "1979-10-14"
+\end{verbatim}
+
+Like all function in the tidyverse, the \textbf{parse}() functions are
+uniform: the first argument is a character vector to parse, and the na
+argument specifies which strings should be treated as missing:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{parse\_integer}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"1"}\NormalTok{, }\StringTok{"231"}\NormalTok{, }\StringTok{"."}\NormalTok{, }\StringTok{"456"}\NormalTok{), }\AttributeTok{na =} \StringTok{"."}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]   1 231  NA 456
+\end{verbatim}
+
+If parsing fails, you'll get a warning:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{parse\_integer}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"123"}\NormalTok{, }\StringTok{"345"}\NormalTok{, }\StringTok{"abc"}\NormalTok{, }\StringTok{"123.45"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: 2 parsing failures.
+## row col               expected actual
+##   3  -- no trailing characters abc   
+##   4  -- no trailing characters 123.45
+\end{verbatim}
+
+If there are many parsing failures, you can use \textbf{problems()} to
+get the complete set. This returns a tibble, which you can then
+manipulate with dplyr
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{problems}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2 x 4
+##     row   col expected               actual
+##   <int> <int> <chr>                  <chr> 
+## 1     3    NA no trailing characters abc   
+## 2     4    NA no trailing characters 123.45
+\end{verbatim}
+
+\hypertarget{types-of-parse}{%
+\section{\texorpdfstring{\textbf{Types of
+Parse()}}{Types of Parse()}}\label{types-of-parse}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{parse\_logical()} and \textbf{parse\_integer()} parse logicals
+  and integers respectively. There's basically nothing that can go wrong
+  with these parsers.
+\item
+  \textbf{parse\_double()} is a strict numeric parser, and
+  \textbf{parse\_number()} is a flexible numeric parser. These are more
+  complicated than you might expect because different parts of the world
+  write numbers in different ways.
+\item
+  \textbf{parse\_character()} seems so simple that it shouldn't be
+  necessary. But one complication makes it quite important: character
+  encoding.
+\item
+  \textbf{parse\_factor()} create factors, the data structure that R
+  uses to represent categorical variables with fixed and known values.
+\item
+  \textbf{parse\_datetime()}, \textbf{parse\_date()}, and
+  \textbf{parse\_time()} allow you to parse various date \& time
+  specifications. These are the most complicated because there are so
+  many different ways of writing dates.
+\end{enumerate}
+
+\hypertarget{numbers}{%
+\section{\texorpdfstring{\textbf{Numbers}}{Numbers}}\label{numbers}}
+
+It seems like it should be straightforward to parse a number, but three
+problems make it tricky:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  People write numbers differently in different parts of the world
+\item
+  Numbers are often surrounded by other characters that provide some
+  context, like \$1000 or 10\%
+\item
+  Numbers often contains ``grouping'' characters to make them easier to
+  read, like ``1,000,000'', and these grouping character vary around the
+  world.
+\end{enumerate}
+
+To address these problems we can use the notion of a ``locale'', an
+object that specifies parsing options that differ from place to place
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{parse\_double}\NormalTok{(}\StringTok{"1.23"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.23
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{parse\_double}\NormalTok{(}\StringTok{"1,23"}\NormalTok{, }\AttributeTok{locale =} \FunctionTok{locale}\NormalTok{(}\AttributeTok{decimal\_mark =} \StringTok{","}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.23
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{parse\_number}\NormalTok{(}\StringTok{"$100"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 100
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{parse\_number}\NormalTok{(}\StringTok{"20\%"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 20
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{parse\_number}\NormalTok{(}\StringTok{"It cose $123.45"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 123.45
+\end{verbatim}
+
+The final problem is addressed by the combination of
+\textbf{parse\_number()} and the locale as \textbf{parse\_number()} will
+ignore the ``grouping mark''
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{parse\_number}\NormalTok{(}\StringTok{"$123,456,789"}\NormalTok{, }\AttributeTok{locale =} \FunctionTok{locale}\NormalTok{(}\AttributeTok{grouping\_mark =} \StringTok{","}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 123456789
+\end{verbatim}
+
+\hypertarget{strings}{%
+\section{\texorpdfstring{\textbf{Strings}}{Strings}}\label{strings}}
+
+Similar to numbers, you can use \textbf{locale} to turn character
+strings into other languages
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x2 }\OtherTok{\textless{}{-}} \StringTok{"}\SpecialCharTok{\textbackslash{}x82\textbackslash{}xb1\textbackslash{}x82\textbackslash{}xf1\textbackslash{}x82\textbackslash{}xc9\textbackslash{}x82\textbackslash{}xbf\textbackslash{}x82\textbackslash{}xcd}\StringTok{"}
+\FunctionTok{parse\_character}\NormalTok{(x2, }\AttributeTok{locale =} \FunctionTok{locale}\NormalTok{(}\AttributeTok{encoding =} \StringTok{"Shift{-}JIS"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "こんにちは"
+\end{verbatim}
+
+\hypertarget{factors}{%
+\section{\texorpdfstring{\textbf{Factors}}{Factors}}\label{factors}}
+
+Within the \textbf{parse\_factor()} function, we can use
+\textbf{levels=} to signify how exactly to sort the strings as factors.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fruit }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"apple"}\NormalTok{, }\StringTok{"banana"}\NormalTok{)}
+\FunctionTok{parse\_factor}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"apple"}\NormalTok{, }\StringTok{"banana"}\NormalTok{, }\StringTok{"banana"}\NormalTok{), }\AttributeTok{levels =}\NormalTok{ fruit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] apple  banana banana
+## Levels: apple banana
+\end{verbatim}
+
+\hypertarget{dates-date-times-and-times}{%
+\section{\texorpdfstring{\textbf{Dates, date-times, and
+times}}{Dates, date-times, and times}}\label{dates-date-times-and-times}}
+
+You pick between three parsers depending on whether you want a date (the
+number of days since 1970-01-01), a date-time (the number of seconds
+since mignight 1970-01-01), or a time (the number of seconds since
+midnight). When called without any additional arguments.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{parse\_datetime}\NormalTok{(}\StringTok{"2010{-}10{-}01T2010"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "2010-10-01 20:10:00 UTC"
+\end{verbatim}
+
+\textbf{parse\_date()} expects a four digit year, a \textbf{-} or
+\textbf{/}, the month, a \textbf{-} or \textbf{/}, then the day:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{parse\_date}\NormalTok{(}\StringTok{"2010{-}10{-}01"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "2010-10-01"
+\end{verbatim}
+
+\textbf{parse\_time()} expects the hour, \textbf{:}, minutes, optionally
+\textbf{:} and seconds, and an optional am/pm specifer.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{parse\_time}\NormalTok{(}\StringTok{"01:10am"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 01:10:00
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{parse\_time}\NormalTok{(}\StringTok{"20:10:01"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 20:10:01
+\end{verbatim}
+
+If these defaults don't work for your data you can supply your own
+date-time format, built up of the following pieces: \emph{Year}
+
+\textbf{\%Y} (4digits) \textbf{\%y} (2 digits)
+
+\emph{Month} \textbf{\%m} (2 digits) \textbf{\%b} (abbreviated name)
+\textbf{B\%} (full name, ``January'')
+
+\emph{Day} \textbf{\%d} (2 digits) \textbf{\%e} (optional leading space)
+
+\emph{Time} \textbf{\%H} (0-23 hour) \textbf{\%I} (0-12, must be used
+with \%p) \textbf{\%p} (AM/PM indicator) \textbf{\%M} (minutes)
+\textbf{\%S} (integer seconds) \textbf{\%OS} (Real seconds) \textbf{\%Z}
+(Time Zone) \textbf{\%z} (as offset from UTC, eg +0800)
+
+Examples
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{parse\_date}\NormalTok{(}\StringTok{"01/02/15"}\NormalTok{, }\StringTok{"\%m/\%d/\%y"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "2015-01-02"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{parse\_date}\NormalTok{(}\StringTok{"01/02/15"}\NormalTok{, }\StringTok{"\%d/\%m/\%y"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "2015-02-01"
+\end{verbatim}
+
+\hypertarget{parsing-a-file}{%
+\section{\texorpdfstring{\textbf{Parsing a
+File}}{Parsing a File}}\label{parsing-a-file}}
+
+readr uses a heuristic to figure out the type of each column: it reads
+the first 1000 rows and uses some (moderately conservative) heuristics
+to figure out the type of each column. You can emulate this process with
+a character vector using \textbf{guess\_parser()}, which returns readr's
+best guess, and \textbf{parse\_guess()} which uses that guess to parse a
+column.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{guess\_parser}\NormalTok{(}\StringTok{"2010{-}10{-}01"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "date"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{guess\_parser}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"TRUE"}\NormalTok{, }\StringTok{"FALSE"}\NormalTok{, }\StringTok{"T"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "logical"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str}\NormalTok{(}\FunctionTok{parse\_guess}\NormalTok{(}\StringTok{"2010{-}10{-}01"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Date[1:1], format: "2010-10-01"
+\end{verbatim}
+
+\hypertarget{writing-to-a-file}{%
+\section{\texorpdfstring{\textbf{Writing to a
+File}}{Writing to a File}}\label{writing-to-a-file}}
+
+readr also comes with two useful functions for writing data back to
+disk: \textbf{write\_csv()} and \textbf{write\_tsv()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{challenge }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\FunctionTok{readr\_example}\NormalTok{(}\StringTok{"challenge.csv"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 2000 Columns: 2
+## -- Column specification --------------------------------------------------------
+## Delimiter: ","
+## dbl  (1): x
+## date (1): y
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{write\_csv}\NormalTok{(challenge, }\StringTok{"challenge.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+
+\end{document}
