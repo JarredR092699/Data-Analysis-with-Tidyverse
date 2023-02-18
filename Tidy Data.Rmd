@@ -1,0 +1,133 @@
+---
+title: "Tidy Data"
+author: "Jarred Robidoux"
+date: "2023-02-18"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# __Tidy Data__
+
+## __Introduction__
+In this cahpter, you will learn a consistent way to organise your data in R, and organization called **tidy data**. Getting you data into this format requires some upfront work, but that work pays off in the long term. 
+
+
+### __Prerequisites__
+In this chapter we'll focus on tidyr, a package that provides a bunch of tools to help tidy up your messy datasets. tidyr is a member of the core tidyverse
+```{r}
+library(tidyverse)
+```
+
+## __Tidy Data__
+You can represent the same underlying data in multiple ways. The example below shows the same data organized in four different ways. Each dataset shows the same values for four variables *country*, *year*, *population*, and *cases*, but each dataset organizes the values in a different way. 
+Table 1
+```{r}
+table1
+```
+
+Table 2
+```{r}
+table2
+```
+
+Table 3
+```{r}
+table3
+```
+Table 4a 
+```{r}
+table4a
+```
+Table 4b
+```{r}
+table4b
+```
+
+There are three interrelated rules which make a dataset tidy:
+1. Each variable must have its own column
+2. Each observation must have its own row
+3. Each value must have its own cell
+
+These rules are interrelated because it's impossible to only satisfy two of the three. That interrelationship leads to an even simpler set of practical instructions:
+1. Put each dataset in a tibble
+2. Put each variable in a column
+
+## __Exercises__
+1. Compute the *rate* for table2. 
+```{r}
+table2_cases <- table2 %>%
+  filter(type == "cases")
+
+table2_population <- table2 %>%
+  filter(type == "population")
+
+table2_mod <- tibble(
+  country = table2_cases$country,
+  year = table2_cases$year,
+  cases = table2_cases$count,
+  population = table2_population$count
+)
+
+table1 == table2_mod
+
+table2_mod %>%
+  mutate(rate = (cases / population) * 10000)
+```
+
+## __Pivoting__
+For most real analyses, you'll need to do some tidying. 
+
+1. One variable might be spread across multiple columns
+2. One observation might be scattered across multiple rows
+
+To fix these problems, you'll need the two most important functions in tidyr: *pivot_longer()* and *pivot_wider()*
+
+### __pivot_longer()__
+To tidy a dataset like this, we need to *pivot* the offending columns into a new pair of variables. To describe that operation we need three parameters. 
+
+- The set of columns whose names are values, not variables. In this example, those are the columns 1999 and 2000. 
+
+- The name of the variable to move the column names to. Here it is *year*
+
+- The name of the variable to move the column values to. Here it is *cases*
+
+```{r}
+table4a %>%
+  pivot_longer(c(`1999`, `2000`), names_to = "year", values_to = "cases")
+```
+
+*pivot_longer()* makes data sets longer by increasing the number of rows and decreasing the number of columns. 
+
+Tidy table 4b
+```{r}
+table4b %>%
+  pivot_longer(c(`1999`, `2000`), names_to = "year", values_to = "population")
+```
+To combine the tidied versions of table4a and table4b into a single tibble, we need to use *left_join*, which you'll learn about later
+```{r}
+tidy4a <- table4a %>%
+  pivot_longer(c(`1999`, `2000`), names_to = "year", values_to = "cases")
+
+tidy4b <- table4b %>%
+  pivot_longer(c(`1999`, `2000`), names_to = "year", values_to = "population")
+
+left_join(tidy4a, tidy4b)
+```
+
+## __Wider__
+*pivot_wider()* is the opposite of *pivot_longer()*. You use it when an observation is scattered across multiple rows. For example, take *table2*: an observation is a country in a year, but each observation is spread across two rows.
+```{r}
+table2 %>%
+  pivot_wider(names_from = type, values_from = count)
+```
+
+## __Exercises__
+1. Why does this code fail? 
+```{r}
+table4a %>%
+  pivot_longer(c(1999, 2000), names_to="year", values_to = "cases")
+```
+
