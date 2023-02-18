@@ -9,22 +9,78 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+# __Tibbles__
+### _Prerequisites__
+In this chapter we'll explore the **tibble** package, part of the core tidyverse.
+```{r}
+library(tidyverse)
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+# __Creating Tibbles__
+Almost all of the functions that you'll use in this book produce tibbles, as tibbles are one of the unifying features of the tidyverse. Most other R packages use regular data frames, so you might want to coerce a data frame to a tibble. You can do that with **as_tibble()**
+```{r}
+as_tibble(iris)
+```
+You can create a new tibble from individual vectors with **tibble()**
+```{r}
+tibble(
+  x=1:5,
+  y=1,
+  z=x^2+y
+)
+```
+It's possible for a tibble to have column names that are not valud R variable names, aka **non-syntactic** names. To refer these variable, you need to surround them with backticks, `
+```{r}
+tibble(
+  `:-(` = "frowny face",
+  `2000` = "number"     
+)
+```
+Another way to create a tibble is with **tribble()**, short for transposed tibble. **tribble()** is customised for data entry in code: column heading are defind by formulas (they start with ~), and entries are separated by commas. 
+```{r}
+tribble(
+  ~x, ~y, ~z,
+  "a", 2, 3.6,
+  "b", 1, 8.5
+)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+# __Tibbles vs data.frame__
+There are two main differences in the usage of a tibble vs a classic data.frame: printing and subsetting
+
+## __Printing__
+Tibbles have a refined print method that shows only the first 10 rows, and all the columns that fit on the screen. This makes it much easier to work with large data. In addition to its name, each column reports its type, a nice feature borrowed from **str()**
+
+Tibbles are designed so that you don't accidentally overwhelm your console when you print large data frame. But sometimes you need more output than the default display. There are a few options that can help. 
+
+First, you can explicitly **print()** the data frame and control the number of rows (n) and the **width** of the display. width = Inf will display all columns
+```{r}
+install.packages("nycflights13", repos = "http://cran.us.r-project.org")
+library(nycflights13)
+nycflights13::flights %>%
+  print(n=10, width = Inf)
+```
+
+## __Subsetting__
+So far all the tools you've learned have worked with complete data frames. If you want to pull out a single variable, you need some new tools, **$** and **[[**. **[[** can extract by name or position; **$** only extracts by name but is a little less typing.
+```{r}
+df <- tibble(
+  x = runif(5),
+  y = runif(5)
+)
+```
+
+Extract by name 
+```{r}
+df$x
+```
+Extract by position
+```{r}
+df[[1]]
+```
+To use these in a pipe, you'll need to use the special placeholder **.**
+```{r}
+df %>%
+  .$x
+```
+
