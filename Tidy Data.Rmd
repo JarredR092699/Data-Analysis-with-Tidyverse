@@ -128,6 +128,105 @@ table2 %>%
 1. Why does this code fail? 
 ```{r}
 table4a %>%
-  pivot_longer(c(1999, 2000), names_to="year", values_to = "cases")
+  pivot_longer(c(`1999`, `2000`), names_to="year", values_to = "cases")
 ```
+
+2. What would happen if you widen this table? Why? How could you add a new column to uniquely identify each value?
+```{r}
+people <- tribble(
+  ~name, ~names, ~values, 
+  "Phillip Woods", "age", 45,
+  "Phillip Woods", "height", 186,
+  "Phillip Woods", "age", 50,
+  "Jessoca Cordero", "age", 37,
+  "Jessica Cordero", "height", 156
+)
+
+```
+
+3. Tidy the simple tibble below. 
+```{r}
+preg <- tribble(
+  ~pregnant, ~male, ~female,
+  "yes", NA, 10,
+  "no", 20, 12
+)
+
+preg %>%
+  pivot_longer(c(male, female), names_to = "sex", values_to = "count")
+```
+
+## __Separating and Uniting__
+So far you've learned how to tidy table2 and table4, but not table3. table3 has a different problem: we have one column (rate) that contains two variables (cases and population). 
+```{r}
+table3
+```
+To fix this problem, we'll need the separate() function. 
+
+## __Separate__
+separate() pulls apart one column into multiple columns, by splitting wherever a separator character appears.
+```{r}
+table3 %>%
+  separate(rate, into = c("cases", "population"))
+```
+Notice the column types: you'll see that cases and population are character columns.
+
+```{r}
+table3 %>%
+  separate(rate, into = c("cases", "population"), convert = TRUE)
+```
+
+## __Unite__
+*unite()* is the inverse of *separate()*: it combines multiple columns into a single column. 
+```{r}
+table5 %>%
+  unite(new, century, year)
+```
+In this case we also need to use the *sep* argument. The default will place an underscore (_) between the values from different columns
+```{r}
+table5 %>%
+  unite(new, century, year, sep = "")
+```
+
+# __Excerises__
+1. What do the *extra* and *fill* arguments do in *separate()*? Experiment with the various options for the following two toy datasets. 
+```{r}
+tibble(x=c("a,b,c", "d,e,f,g", "h,i,j")) %>%
+  separate(x, c("one", "two", "three"), extra = "warn", fill = "left")
+
+?separate
+```
+The *extra* and *fill* arguments control what happens to the warning message and missing values when there are too many/not enough pieces to register into columns using *separate()*
+
+2. Both *unite()* and *separate()* have a remove argument. What does it do? Why would you set it to false? 
+```{r}
+table5 %>%
+  unite(new, century, year, remove = TRUE)
+```
+By setting *remove = TRUE* in both *unite()* and *separate()*, you will be excluding the input columns from the output. This looks much cleaner when you do this, hence why *remove = TRUE* is the default. 
+
+# __Case Study__
+To finish off the chapter, let's pull together everything you've learned to tackle a realistic data tidying problem. The tidyr::who data set contains tuberculosis (TB) cases broken down by year, country, age, gender, and diagnosis method. 
+```{r}
+who
+
+who1 <- who %>%
+  pivot_longer(
+    cols = new_sp_f014:newrel_f65,
+    names_to = "key",
+    values_to = "cases",
+    values_drop_na = TRUE
+  )
+
+who2 <- who1 %>%
+  mutate(key = stringr::str_replace(key, "newrel", "new_rel"))
+
+who3 <- who2 %>%
+  separate(key, c("new", "type", "sexage"), sep = "_")
+
+who4 <- who3 %>%
+  select(-new, -iso2, -iso3)
+```
+
+
 
