@@ -1,0 +1,92 @@
+---
+title: "Relational Data"
+author: "Jarred Robidoux"
+date: "2023-02-19"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# __Relational Data__
+
+## __Introduction__
+It's rare that a data analysis involves only a single table of data. Typically you have many tables of data, and you must combine them to answer the questions that you're interested in. Collectively, multiple tables of data are called *relational data* because it is the relations, not just the individual datasets, that are important. 
+
+
+To work with relational data you need verbs that work with pairs of tables. There are three families of verbs designed to work with relational data:
+
+- *Mutating Joins*, which add new variables to one data frame from matching observations in another.
+
+- *Filtering Joins*, which filter observations from one data frame based on whether or not they match an observation in the other table.
+
+- *Set operations*, which treat observations as if they were a set of elements.
+
+### __Prerequisites__
+We will explore relational data from *nycflights13* using the two-table verbs from dplyr. 
+```{r}
+library(tidyverse)
+library(nycflights13)
+```
+
+## __nycflights13__
+We will use the nycflights13 package to learn about relational data. nycflights13 contains four tibbles that are related to the *flights* table that you used in *data transformation:*
+
+*airlines* lets you look up the full carrier name from its abbreviated code
+```{r}
+airlines
+```
+*airports* gives information about each airport, identified by the *faa* airport code: 
+```{r}
+airports
+```
+*planes* gives information about each plane, identified by its *tailnum*:
+```{r}
+planes
+```
+*weather* gives the weather at each NYC airport for each hour:
+```{r}
+weather
+```
+One way to show the relationships between the different tables is with a drawing: 
+```{r, out.width="150%"}
+knitr::include_graphics("relational-nycflights.png")
+```
+
+For nycflights13:
+
+- *flights* connects *planes* via a single variable, *tailnum*
+
+- *flights* connects to *airlines* through the *carrier* variable
+
+- *flights* connects to *airports* in two ways: via the *origin* and *dest* variables
+
+- *flights* connects to *weather* via *origin* (the location), and *year*, *month*, *day* and *hour* (the time)
+
+## __Keys__
+The variables used to connect each pair of tables are called *keys*. A key is a variable (or set of variables) that uniquely identifies an observation.
+
+There are two types of keys:
+
+A __primary key__ uniquely identifies an observation in its own table. For example, *planes$tailnum* is a primary key because it uniquely identifies each plane in the *planes* table.
+
+A __foreign key__ uniquely identifies an observation in another table. For example, *flights$tailnum* is a foreign key because it appears in the *flights* table where it matches each flight to a unique plane. 
+
+A primary key and the corresponding foreign key in another table form a __relation__. Relations are typically one-to-many. For example, each flight has one plance, but each plane has many flights. In other data, you'll occasionally see a 1-to-1 relationship. You can think of this as a special case of 1-to-many. You can model many-to-many relations with many-to-1 plus a 1-to-many relation. For example, in this data there's a many-to-many relationship between airlines and airports: each airline flies to many airports; each airport hosts many airlines.
+
+## __Mutating Joins__
+The first tool that we'll look at for combining a pair of tables is the __mutating join__. A mutating join allows you to combine variables from two tables. It first matches observations by their keys, then copies across variables from one table to the other. 
+
+- __Left Join__
+Keeps all observations in X
+
+- __Right Join__
+Keeps all observations in Y
+
+- __Full Join__
+Keeps all observations in X and Y
+
+- __Inner Join__
+An inner join matches pairs of observations whenever keys are equal. Unmatched rows are NOT included in the result. 
+
