@@ -1,0 +1,29 @@
+---
+title: "Strings"
+author: "Jarred Robidoux"
+date: "2023-02-21"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# __Strings__
+
+## __Introduction__
+This chapter introduces you to string manipulation in R. You'll learn the basics of how strings work and how to create them by hand, but the focus of this chapter will be on regular expressions, or regexps for short. Regular Expressions are a concise language for describing patterns in strings. 
+
+### __Prerequisites__
+This chapter will focus on the stringr package for string manipulation, which is part of the core tidyverse
+```{r}
+library(tidyverse)
+```
+
+## __String Basics__
+To include a literal single or double quote in a string you can use \ to "escape" it:
+```{r}
+double_quote <- "\""
+single_quote <- '\''
+```
+

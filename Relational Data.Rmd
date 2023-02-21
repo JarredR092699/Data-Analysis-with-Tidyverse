@@ -90,3 +90,121 @@ Keeps all observations in X and Y
 - __Inner Join__
 An inner join matches pairs of observations whenever keys are equal. Unmatched rows are NOT included in the result. 
 
+## __Duplicate Keys__
+So far all the examples have assumed that the keys are unique. But that's not always the case. This section explains what happens when the keys are not unique. There are two possibilities. 
+
+1. One table has duplicate keys. This is useful when you want to add in additional information as there is typically a one-to-many relationship. 
+
+```{r}
+x <- tribble(
+  ~key, ~val_x,
+  1, "x1",
+  2, "x2",
+  2, "x3",
+  1, "x4"
+)
+
+y <- tribble(
+  ~key, ~ val_y,
+  1, "y1",
+  2, "y2"
+)
+
+left_join(x, y, by = "key")
+```
+
+2. Both tables have duplicate keys. This is usualyl an error because in neither table do the keys uniquely identify an observation. When you join duplicated keys, you get all possible combinations. 
+```{r}
+x <- tribble(
+  ~key, ~val_x,
+  1, "x1",
+  2, "x2",
+  2, "x3",
+  3, "x4"
+)
+
+y <- tribble(
+  ~key, ~val_y,
+  1, "y1",
+  2, "y2",
+  2, "y3",
+  3, "y4"
+)
+
+left_join(x, y, by = "key")
+```
+
+## __Defining the key columns__
+So far, the pairs of tables have always been joined by a single variable, and that variable has the same name in both tables. That constraint was encoded by *by="key"*. You can use other values for *by* to connect the tables in other ways:
+
+- The default *by=NULL*, uses all variables that appear in both tables, the so called __natural__ join. For example, the flights and weather tables match on their common variables *year*, *month*, *day*, *hour*, and *origin*
+
+```{r}
+flights2 <- flights
+
+flights2 %>%
+  left_join(weather)
+```
+
+- A character vector, *by="x"*. This is like a natural join, but uses only some of the common variables. For example, *flights* and *planes* have *year* variables, but they mean different things so we only want to join by *tailnum*
+```{r}
+flights
+planes
+
+flights2 %>%
+  left_join(planes, by = "tailnum")
+```
+
+- A named character vector: *by = c("a" = "b")*. This will match variable *a* in table *x* to variable *b* in table y. The variables from x will be used in the output. 
+
+For example, if we want to draw a map we need to combine the flights data with the airports data which contains the locations (*lat* and *lon*) of each airport. 
+```{r}
+flights
+airports
+
+flights2 %>%
+  left_join(airports, by = c("dest" = "faa"))
+```
+
+### __Exercises__
+1. Compute the average delay by destination, then join on the airports data frame so you can show the spatial distribution of delays. 
+```{r}
+avg_dest_delays <- flights %>%
+  group_by(dest) %>%
+  summarize(delay = mean(arr_delay, na.rm = TRUE)) %>%
+  inner_join(airports, by = c(dest = "faa")) 
+
+avg_dest_delays %>%
+  ggplot(aes(lon, lat, color = delay))+
+  borders("state")+
+  geom_point()+
+  coord_quickmap()
+```
+2. Add the location of the origin and destination (i.e. the lat and lon) to flights
+```{r}
+airport_locations <- airports %>%
+  select(faa, lat, lon)
+
+flights %>%
+  select(year:day, hour, origin, dest) %>%
+  left_join(airport_locations, by = c("origin" = "faa")) %>%
+  left_join(airport_locations, by = c("dest" = "faa"))
+```
+
+## __Filtering Joins__
+Filtering joins match observations in the same way as mutating joins, but affect the observations, not the variables. There are two types:
+
+- *semi_join(x, y)* __keeps__ all observations in *x* that have a match in *y*
+
+- *anti_join(x, y)* __drops__ all observations in *x* that have a match in *y*
+
+Semi-joins are useful for matching filtered summary tables back to the original rows. For example, imagine you've found the top ten most popular destinations:
+```{r}
+top_dest <- flights %>%
+  count(dest, sort = TRUE) %>%
+  head(10)
+
+top_dest
+```
+
+
